@@ -21,10 +21,20 @@ const options = {
       component: () => import('@/pages/exception/403'),
     },
     {
+      path: 'bot',
+      name: 'StarBot',
+      component: () => import('@/pages/starenv/starbot.vue'),
+    },
+    {
+      path: 'lab',
+      name: 'StarLab',
+      component: () => import('@/pages/starenv/starlab.vue'),
+    },
+    {
       path: '/',
       name: '首页',
       component: TabsView,
-      redirect: '/login',
+      // redirect: '/login',
       children: [
         {
           path: 'dashboard',
@@ -48,6 +58,28 @@ const options = {
               path: 'analysis',
               name: '分析页',
               component: () => import('@/pages/dashboard/analysis'),
+            }
+          ]
+        },
+        {
+          path:'star_dev',
+          name: 'StarDev',
+          meta: {
+            icon: 'star'
+          },
+          component: BlankView,
+          children: [
+            {
+              path: 'bot',
+              name: 'StarBot',
+              meta:{icon: 'robot'},
+              component: () => import('@/pages/starenv/starbot.vue'),
+            },
+            {
+              path: 'lab',
+              name: 'StarLab',
+              meta:{icon: 'experiment'},
+              component: () => import('@/pages/starenv/starlab.vue'),
             }
           ]
         },
