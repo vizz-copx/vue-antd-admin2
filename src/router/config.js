@@ -31,6 +31,12 @@ const options = {
       component: () => import('@/pages/starenv/starlab.vue'),
     },
     {
+      path: 'message',
+      name: 'StarMessageBox',
+      meta: {icon: 'message'},
+      component: () => import('@/pages/starenv/StarMessageBox'),
+    },
+    {
       path: '/',
       name: '首页',
       component: TabsView,
@@ -62,7 +68,7 @@ const options = {
           ]
         },
         {
-          path:'star_dev',
+          path: 'star_dev',
           name: 'StarDev',
           meta: {
             icon: 'star'
@@ -72,14 +78,20 @@ const options = {
             {
               path: 'bot',
               name: 'StarBot',
-              meta:{icon: 'robot'},
-              component: () => import('@/pages/starenv/starbot.vue'),
+              meta: {icon: 'robot'},
+              component: () => import('@/pages/starenv/starbot'),
             },
             {
               path: 'lab',
               name: 'StarLab',
-              meta:{icon: 'experiment'},
-              component: () => import('@/pages/starenv/starlab.vue'),
+              meta: {icon: 'experiment'},
+              component: () => import('@/pages/starenv/starlab'),
+            },
+            {
+              path: 'message',
+              name: 'StarMessageBox',
+              meta: {icon: 'message'},
+              component: () => import('@/pages/starenv/StarMessageBox'),
             }
           ]
         },
