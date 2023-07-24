@@ -1,5 +1,8 @@
 <template>
   <div>
+    <welcome v-show="welcome" @question="onSendMsg" style="height: 90vh;">
+
+    </welcome>
     <!--    <a-button icon="snippets" type="dashed"></a-button>-->
     <!--    <a-button icon="check" type="dashed"></a-button>-->
     <div style="height: calc(100vh - 185px);overflow: auto;" class="beauty-scroll" ref="scrollArea">
@@ -7,7 +10,7 @@
         <a-card style="width: 100%;" class="user-card" v-if="index%2===0">
           <!--        user message-->
           <span class="box">
-          <span><a-avatar shape="square" size="large" style="background-color:#87d068">ME</a-avatar></span>
+          <span><a-avatar shape="square" size="large" style="background-color:#23a6d5">ME</a-avatar></span>
           <span class="message" v-html="makeVal(item)"></span>
           <span class="actions">
           </span>
@@ -17,10 +20,10 @@
         <a-card style="width: 100%;" class="bot-card" v-else>
           <!--        bot message-->
           <span class="box">
-          <span><a-avatar shape="square" size="large" style="background-color:#FA541C" icon="robot"></a-avatar></span>
+          <span><a-avatar shape="square" size="large" style="background-color:#23d5ab" icon="robot"></a-avatar></span>
           <span class="message" v-html="makeVal(item)"></span>
           <span class="actions">
-            <a-button type="dashed" icon="copy"></a-button>
+<!--            <a-button type="dashed" icon="copy"></a-button>-->
             <a-button type="dashed" icon="like"></a-button>
             <a-button type="dashed" icon="dislike"></a-button>
           </span>
@@ -31,29 +34,32 @@
 
 
     <!--    <a-affix :offset-bottom="0">-->
-    <span class="prompt-card">
+    <div class="prompt-card">
+
          <a-tooltip title="清除当前对话信息">
-          <a-button class="prompt-btn" type="primary" size="large" icon="delete"></a-button>
+          <a-button class="prompt-btn" size="large" icon="delete" @click="history=[]"></a-button>
         </a-tooltip>
 
-        <a-tooltip title="下载当前对话信息">
-          <a-button class="prompt-btn" type="primary" size="large" icon="download"></a-button>
-        </a-tooltip>
+<!--        <a-tooltip title="下载当前对话信息">-->
+<!--          <a-button class="prompt-btn" size="large" icon="download"></a-button>-->
+<!--        </a-tooltip>-->
 
-        <a-tooltip title="切换历史对话模式">
+<!--        <a-tooltip title="切换历史对话模式">-->
 
-          <a-button class="prompt-btn" :type="historyMode?'primary':''" size="large" icon="history"
-                    @click="historyMode=!historyMode"></a-button>
-        </a-tooltip>
+<!--          <a-button class="prompt-btn" :type="historyMode?'primary':''" size="large" icon="history"-->
+<!--                    @click="historyMode=!historyMode"></a-button>-->
+<!--        </a-tooltip>-->
         <a-textarea
             class="prompt-input"
-            style="font-size: larger"
+            style="font-size: larger;height: 40px;"
             placeholder="Enter键发送,Shift+Enter换行"
             autoSize
             @keydown.native="Keydown"
             v-model="prompt"
         />
-      </span>
+
+      <a-spin :spinning="isSpin" style="margin: 10px"/>
+      </div>
 
     <!--    </a-affix>-->
 
@@ -63,16 +69,21 @@
 </template>
 
 <script>
-import myHistory from "@/pages/starenv/mockHistory";
 import MarkdownIt from 'markdown-it';
 import mdHighlightjs from 'markdown-it-highlightjs';
 import "highlight.js/styles/vs2015.css";
 import ClipboardJS from 'clipboard';
+import welcome from './welcome.vue';  //引入组件
 
 export default {
   name: "StarMessageBox",
+  components: {
+    welcome
+  },
   data() {
     return {
+      welcome:true,
+      isSpin: false,
       history: [],
       prompt: '',
       historyMode: false,
@@ -182,6 +193,7 @@ export default {
       }
     },
     onSendMsg(prompt) {
+      this.welcome=false;
       console.log(prompt);
       this.history.push(prompt);
       this.prompt = ''
@@ -204,6 +216,7 @@ export default {
         }),
       })
           .then(response => {
+            self.isSpin=true
             const reader = response.body.getReader();
             const decoder = new TextDecoder('utf-8');
             let buffer = '';
@@ -248,6 +261,7 @@ export default {
             //完成后，进行一次代码块的高亮
             this.flushCB()
             self.scrollToBottom()
+            self.isSpin=false
           })
           .catch(error => {
             console.error('Error:', error);
@@ -278,7 +292,7 @@ body {
 }
 
 .user-card {
-  background-color: transparent;
+  background-color: rgb(248,248,248);
 }
 
 /*.bot-card{*/
@@ -317,14 +331,13 @@ pre {
 
 .prompt-input {
 
-  margin: 7px;
+  margin: 5px;
   resize: none;
+  height: 40px;
 
-  ::-webkit-scrollbar {
-    width: 0;
-    background: transparent; /* Chrome/Safari/Webkit */
-  }
-
-  /*background-color: transparent;*/
+  overflow: hidden; /* 隐藏滚动条 */
+}
+pre{
+  border-radius: 20px;
 }
 </style>

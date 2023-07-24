@@ -2,7 +2,7 @@
 module.exports = {
   lang: 'CN',                           //语言，可选 CN(简体)、HK(繁体)、US(英语)，也可扩展其它语言
   theme: {                              //主题
-    color: '#f97cff',                   //主题色
+    color: '#3b82f6',                   //主题色
     mode: 'dark',                       //主题模式 可选 dark、 light 和 night
     success: '#52c41a',                 //成功色
     warning: '#faad14',                 //警告色
@@ -17,7 +17,7 @@ module.exports = {
   multiPage: false,                     //多页签模式，true:开启，false:不开启
   cachePage: true,                      //是否缓存页面数据，仅多页签模式下生效，true 缓存, false 不缓存
   hideSetting: true,                   //隐藏设置抽屉，true:隐藏，false:不隐藏
-  systemName: 'VarChat',         //系统名称
+  systemName: 'WiseDev',         //系统名称
   copyright: '2023 云计算实验室出品',     //copyright
   asyncRoutes: false,                   //异步加载路由，true:开启，false:不开启
   showPageTitle: false,                  //是否显示页面标题（PageLayout 布局中的页面标题），true:显示，false:不显示

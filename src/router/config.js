@@ -1,6 +1,4 @@
 import TabsView from '@/layouts/tabs/TabsView'
-import BlankView from '@/layouts/BlankView'
-import PageView from '@/layouts/PageView'
 
 // 路由配置
 const options = {
@@ -28,14 +26,24 @@ const options = {
     },
     {
       path: '/',
-      name:'首页',
-      component:TabsView,
-      redirect:'/message-box',
-      children:[{
-        path:'message-box',
-        name:'聊天页面',
-        meta:{icon:'message'},
-        component:()=>import('@/pages/starenv/StarMessageBox')
+      name: '首页',
+      component: TabsView,
+      redirect: '/welcome',
+      children: [{
+        path: 'welcome',
+        name: '首页',
+        meta: {icon: 'home'},
+        component: () => import('@/pages/starenv/welcome.vue')
+      },{
+        path: 'message-box',
+        name: '聊天',
+        meta: {icon: 'message'},
+        component: () => import('@/pages/starenv/StarMessageBox')
+      },{
+        path: 'switch',
+        name: '模型切换',
+        meta: {icon: 'deployment-unit'},
+        component: () => import('@/pages/starenv/modelSwitch.vue')
       }
       ]
     },
